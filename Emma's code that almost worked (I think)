@@ -1,0 +1,30 @@
+#include <kipr/botball.h>
+
+int main()
+{
+    void FollowLine(double runSeconds)
+{
+    double startSeconds = seconds();
+        
+    int temp0=2650;  //              analog(0)    2800        2500
+    int x=(analog(0)-temp0)/30;   //              7.5        -7.5
+    int y=(temp0-analog(0))/30;      //           -7.5        7.5
+        
+	while (seconds()-startSeconds<runSeconds){
+     	if(analog(0)>temp0){
+      	 	motor(0,60+x); 						
+       		motor(1,60+y);
+            printf("Turning Right/n");
+      	}//if too close, turn right
+       	else if (analog(0)<temp0){
+           	motor(0,60+x);
+          	motor(1,60+y);
+       		printf("Turning Left/n");
+       	}//if too far, turn left 
+    }//end of line following while loop  
+    }//end of function FollowLine
+    
+    FollowLine(7.3); //line follow 7.3 seconds
+    
+    return 0;
+}
