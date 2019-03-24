@@ -1,0 +1,39 @@
+#include <kipr/botball.h>
+int main()
+{
+enable_servos;
+set_servo_position(0,1800);
+set_servo_position(1,1900);
+motor(0,85);
+motor(1,85);
+msleep(7000);//forward
+motor(0,63);
+motor(1,-61);
+msleep(1500);//pivot
+set_servo_position(0,910); //lower claw
+set_servo_position(1,1250); //open claw
+motor(0,50);
+motor(1,50);
+msleep(1500); //forward
+void FollowLine(double runSeconds)
+{
+double startSeconds = seconds();
+int temp0=2650;
+while (seconds()-startSeconds<runSeconds){
+int x=(analog(0)-temp0)/30;
+int y=(temp0-analog(0))/30;
+if(analog(0)>temp0){
+motor(0,60+x);
+motor(1,60+y);
+printf("Turning Right/n");
+}//if too close, turn right
+else if (analog(0)<temp0){
+motor(0,60+x);
+motor(1,60+y);
+printf("Turning Left/n");
+}//if too far, turn left
+}//end of line following while loop
+}//end of function FollowLine
+FollowLine(7.3); //line follow 7.3 seconds
+return 0;
+}
