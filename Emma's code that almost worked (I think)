@@ -11,13 +11,13 @@ int main()
 	   int x=(analog(0)-temp0)/30;   //              7.5        -7.5
  	   int y=(temp0-analog(0))/30;      //           -7.5        7.5
 	   if(analog(0)>temp0){
-      	 	motor(0,60+x); 						
-       		motor(1,60+y);
+      	 	motor(0,85+x); 						
+       		motor(1,85+y);
                 printf("Turning Right/n");
       	   }//if too close, turn right
        	   else if (analog(0)<temp0){
-           	motor(0,60+x);
-          	motor(1,60+y);
+           	motor(0,85+x);
+          	motor(1,85+y);
        		printf("Turning Left/n");
        	   }//if too far, turn left 
         }//end of line following while loop  
