@@ -2,8 +2,8 @@
 int main()
 {
 enable_servos;
-set_servo_position(0,1800);
-set_servo_position(1,1900);
+set_servo_position(0,1800);//eventually in set-up code
+set_servo_position(1,1900);//eventually in set-up code
 motor(0,85);
 motor(1,85);
 msleep(7000);//forward
@@ -23,13 +23,13 @@ while (seconds()-startSeconds<runSeconds){
 int x=(analog(0)-temp0)/30;
 int y=(temp0-analog(0))/30;
 if(analog(0)>temp0){
-motor(0,60+x);
-motor(1,60+y);
+motor(0,85+x);
+motor(1,85+y);
 printf("Turning Right/n");
 }//if too close, turn right
 else if (analog(0)<temp0){
-motor(0,60+x);
-motor(1,60+y);
+motor(0,85+x);
+motor(1,85+y);
 printf("Turning Left/n");
 }//if too far, turn left
 }//end of line following while loop
