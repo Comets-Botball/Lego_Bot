@@ -1,0 +1,35 @@
+#include <kipr/botball.h>
+
+int main()
+{
+    enable_servos(); 
+    set_servo_position(2,818);
+    motor(0,48);
+    motor(1,5);
+    msleep(3100);//turning to put coupler
+    motor(0,50);
+    motor(1,50);
+    msleep(3000);//going forward
+    motor(0,5);
+    motor(1,-5);
+    msleep(500);//small pivot
+    motor(0,50);
+    motor(1,50);
+    msleep(5500);//forward again
+    motor(0,5);
+    motor(1,-5);
+    msleep(500);//another pivot
+    motor(0,5);
+    motor(1,5);
+    msleep(1000);//forward
+    motor(1,-30);
+    msleep(500);//straighten
+    motor(0,-50);
+    motor(1,-50);
+    msleep (2500);//backward for magnets
+    set_servo_position(2,1792);
+    motor(0,50);
+    motor(1,50);
+    msleep(3500);//forward for magnets
+    return 0;
+}
