@@ -1,0 +1,88 @@
+#include <kipr/botball.h>
+
+int main()
+{
+    enable_servos();
+    //set_servo_position(2,2040);//raise hotstick
+    //msleep(1500);
+    
+    motor(0,70);
+    motor(1,70);
+    msleep(4500);//forward
+    
+    motor(0,25);  //11
+    motor(1,-15);  //-11
+    msleep(1500);//turn slightly
+    
+    motor(0,60);  //55
+	motor(1,55);  //50
+	msleep(5000);//forward
+	
+    motor(0,23); //40
+	motor(1,-20); //-40
+	msleep(1500);//pivot
+    printf("pivoting/n");
+    
+    motor(0,-15);
+    motor(1,-24);
+    msleep(3500);
+    
+    while(get_servo_position(3) > 135){
+        set_servo_position(3,get_servo_position(3) - 50);
+            msleep(20);
+    }//gradually lower scoop
+    
+    motor(0,24);
+    motor(1,21);
+    msleep(3500);
+   
+   // set_servo_position(2,1500);//adjust hotstick
+   // msleep(500);
+    
+    motor(0,40);
+	motor(1,33);
+	msleep(3500); //forward
+    printf("going forward/n");
+    
+    motor(0,-10);
+    motor(1,5);
+    msleep(1500);
+    printf("trying to correct/n");
+     
+    motor(0,70);
+    motor(1,70);
+    msleep(500);//forward a little
+    printf("forward poco a poco/n");
+        
+   //motor(0,5);
+   //motor(1,-10);
+   //msleep(1500);//trying to correct again
+   //printf("trying to correct again/n");
+     
+    motor(0,35);
+    motor(1,40);
+    msleep(2000);//forward turn left slightly
+    
+void FollowLine(double runSeconds)
+{
+double startSeconds = seconds();
+  int temp0=2700;
+while (seconds()-startSeconds<runSeconds){
+  int x=(analog(0)-temp0)/30;
+  int y=(temp0-analog(0))/30;
+	if(analog(0)>temp0){
+	motor(0,85+x);
+	motor(1,85+y);
+	printf("Turning Right/n");
+}//if too close, turn right
+	else if (analog(0)<temp0){
+	motor(0,85+x);
+	motor(1,85+y);
+	printf("Turning Left/n");
+}//if too far, turn left
+}//end of line following while loop
+}//end of function FollowLine
+FollowLine(7.3); //line follow 7.3 seconds
+    
+return 0;
+}
