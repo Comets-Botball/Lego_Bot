@@ -1,0 +1,273 @@
+#include <kipr/botball.h>
+
+int main()
+{
+     wait_for_light(1);
+     shut_down_in(118);
+     enable_servos();
+  while (get_servo_position(2)<1275){//raise hotstick
+    set_servo_position(2,get_servo_position(2) + 25);
+    msleep(15);
+    }//lower hotstick
+
+    motor(0,72);
+    motor(1,69);
+    msleep(4500);//forward
+    printf("1/n");
+           
+    motor(0,25);  //11
+    motor(1,-15);  //-11
+    msleep(1500);//turn slightly
+    printf("2/n");
+
+    motor(0,65);  //55
+    motor(1,60);  //50
+    msleep(5000);//forward
+    printf("3/n");
+
+    motor(0,24); //24
+    motor(1,-24); //-20
+    msleep(1500);//pivot
+    printf("pivoting/n");
+
+    motor(0,-14);//-15
+    motor(1,-26);//-24
+    msleep(3500);
+    printf("4/n");
+
+    while(get_servo_position(3) > 140){
+        set_servo_position(3,get_servo_position(3) - 50);
+        msleep(20);
+    }//gradually lower scoop
+
+    motor(0,30);
+    motor(1,33);
+    msleep(3500);
+    printf("5/n");
+
+    motor(0,35);
+    motor(1,18);
+    msleep(500);
+    printf("6/n");
+
+    set_servo_position(2,1000);//raise hotstick
+    
+    motor(0,60);
+    motor(1,52);
+    msleep(500);//forward a little
+    printf("forward poco a poco/n");
+
+    motor(0,40);
+    motor(1,36);
+    msleep(2000);//forward turn left slightly
+    printf("7/n");
+
+    void FollowLine(double runSeconds)
+    {
+        double startSeconds = seconds();
+        int temp0=2620;
+        while (seconds()-startSeconds<runSeconds){// && analog(0)>1000){
+                int x=(analog(0)-temp0)/35;
+                if(analog(0)>temp0){
+                    motor(0,50+x);
+                    motor(1,50-x);
+                    msleep(100);
+                    printf("Turning Right/n");
+                   
+                    //printf(analog(0));
+                }//if too close, turn right
+                else if (analog(0)<temp0){
+                    motor(0,50+x);
+                    motor(1,50-x);
+                    msleep(100);
+                    printf("Turning Left/n");
+                   // printf(analog(0));
+            }//if too far, turn left
+                   }//end of line following while loop
+                   }//end of function FollowLine
+                   FollowLine(4); //line follow 5 seconds
+			motor(0,50);
+    		motor(0,50);
+    		msleep(175);
+    		printf("notlinefollowing/n");
+    			   FollowLine(6);
+                   ao();
+
+           motor(0,75);
+           motor(1,75);
+           msleep(6800);
+           printf("going forward/n");
+
+    motor(0,-20);
+    motor(1,-25);
+    msleep(55);//back un poco
+
+    while(get_servo_position(3) < 980){
+        set_servo_position(3,get_servo_position(3) + 25);
+        msleep(26);//raise scoop
+    }
+    motor(0,0);
+    motor(1,-10);
+    msleep(3500);//back turn
+
+    motor(0,20);
+    motor(1,20);
+    msleep(5500);//forward
+
+    motor(0,17);
+    motor(1,0);
+    msleep(5500);//pivot
+
+    motor(0,50);
+    motor(1,50);
+    msleep(2000);// forward
+    
+    while(get_servo_position(3) < 1320){
+        set_servo_position(3,get_servo_position(3) + 25);
+        msleep(36);//raise scoop more
+    }
+        
+        int temp1=2220;//2220
+          while (analog(3)<3400){
+            int x=(analog(2)-temp1)/45;
+            if(analog(2)>temp1){
+                motor(0,40+x);
+                motor(1,40-x);
+               // msleep(100);
+                printf("Turning Right 1/n");
+            }//if too close, turn right
+            else if (analog(2)<temp1){
+                motor(0,40+x);
+                motor(1,40-x);
+               // msleep(100);
+                printf("Turning Left1/n");
+            }//if too far, turn left
+        }//end of line following while loop//line following number one - forward
+    ao();
+    printf("STOP/n");
+    msleep(1000); 
+    
+    motor(0,50);
+    motor(1,50);
+    msleep(150);//forward
+    ao();
+    msleep(1000);
+      
+    set_servo_position(1,1100);//open trap door
+    msleep(2000);
+    set_servo_position(3,1050);//jerk scoop forward
+    msleep(1000);
+    set_servo_position(3,1320);
+    msleep(1500);
+    
+    motor(0,65);
+    motor(1,65);
+    msleep(2800);
+   
+    while (analog(3)<3400){
+    motor(0,-66);
+    motor(1,-65);
+    msleep(450);
+    }//backup to line
+  
+    motor(0,-55);
+    motor(1,-50);
+    msleep(1000);//backwards
+    ao();
+    msleep(850);
+    
+     while(get_servo_position(2) < 1400){
+        set_servo_position(2,get_servo_position(2) + 30);
+        msleep(30);
+    }//gradually raise hot stick
+    
+    // int temp1=2220;
+         while (analog(3)<3400){
+            int x=(analog(2)-temp1)/45;
+            if(analog(2)>temp1){
+                motor(0,-40-x);
+                motor(1,-40+x);
+               // msleep(100);
+                printf("Turning Right 2/n");
+            }//if too close, turn right
+            else if (analog(2)<temp1){
+                motor(0,-40-x);
+                motor(1,-40+x);
+               // msleep(100);
+                printf("Turning Left 2/n");
+            }//if too far, turn left
+        }//end of line following while loop
+    ao();//line follow number two-backwards
+    
+//    while(get_servo_position(2) < 1400){
+//        set_servo_position(2,get_servo_position(2) + 30);
+//        msleep(30);
+//    }//gradually raise hot stick
+       
+    motor(0,50);
+    motor(1,50);
+    msleep(250);//forwards
+  
+     //int temp1=2220;
+          while (analog(3)<3400){
+            int x=(analog(2)-temp1)/45;
+            if(analog(2)>temp1){
+                motor(0,40+x);
+                motor(1,40-x);
+             //   msleep(100);
+                printf("Turning Right 3/n");
+            }//if too close, turn right
+            else if (analog(2)<temp1){
+                motor(0,40+x);
+                motor(1,40-x);
+            //    msleep(100);
+                printf("Turning Left3/n");
+            }//if too far, turn left
+        }//end of line following while loop
+   ao();//line follow number three-forwards
+    
+        while(get_servo_position(2) > 950){
+        set_servo_position(2,get_servo_position(2) - 30);
+        msleep(30);
+    }//gradually lower hot stick
+    
+    motor(0,50);
+    motor(1,50);
+    msleep(1720);//forwards
+    
+  while(get_servo_position(2) < 1400){
+        set_servo_position(2,get_servo_position(2) + 30);
+        msleep(30);
+    }//gradually raise hot stick
+       
+    // int temp1=2220;
+ void FollowPipe(double runSeconds)
+    {
+       double startSeconds = seconds();
+        while (seconds()-startSeconds<runSeconds){ // && analog(1)>1000
+            int x=(analog(2)-temp1)/45;
+            if(analog(2)>temp1){
+                motor(0,40-x);
+                motor(1,40+x);
+               // msleep(100);
+                printf("Turning Right 4/n");
+            }//if too close, turn right
+            else if (analog(2)<temp1){
+                motor(0,40-x);
+                motor(1,40+x);
+               // msleep(100);
+                printf("Turning Left 4/n");
+            }//if too far, turn left
+        }//end of line following while loop
+ 		}//end of function FollowLine
+  FollowPipe(2.5); //line follow 5 seconds
+   // ao();//line follow number three-forwards to utility zone
+    
+      while(get_servo_position(2) > 950){
+        set_servo_position(2,get_servo_position(2) - 30);
+        msleep(30);
+    }//gradually lower hot stick
+    
+
+                   return 0;
+                   }
